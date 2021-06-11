@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import HealthBar from "./Components/HealthBar";
+import Controls from "./Components/Controls";
+import Logs from "./Components/Logs";
+import StartScreen from "./Components/StartScreen";
 import "./App.css";
 
 function App() {
   const [gameData, setGameData] = useState({
+    isGameRunning: false,
     playerHealth: 100,
     monsterHealth: 100,
-    isGameRunning: false,
-    turns: [],
   });
+
+  const [turns, setTurns] = useState([]);
 
   useEffect(() => {
     if (gameData.monsterHealth <= 0) {
@@ -28,20 +33,20 @@ function App() {
 
   function onNewGame() {
     setGameData({
+      isGameRunning: true,
       playerHealth: 100,
       monsterHealth: 100,
-      isGameRunning: true,
-      turns: [],
     });
+    setTurns([]);
   }
 
   function onGameEnd() {
     setGameData({
+      isGameRunning: false,
       playerHealth: 100,
       monsterHealth: 100,
-      isGameRunning: false,
-      turns: [],
     });
+    setTurns([]);
   }
 
   function randomCalc(min, max) {
@@ -56,6 +61,15 @@ function App() {
       playerHealth: gameData.playerHealth - dmg1,
       monsterHealth: gameData.monsterHealth - dmg2,
     });
+    setTurns((prevList) => {
+      return [
+        ...prevList,
+        {
+          monsterText: `Monster hits player ${dmg1}`,
+          playerText: `Player hits monster ${dmg2}`,
+        },
+      ];
+    });
   };
 
   const onSpecialAttack = () => {
@@ -66,6 +80,15 @@ function App() {
       playerHealth: gameData.playerHealth - dmg1,
       monsterHealth: gameData.monsterHealth - dmg2,
     });
+    setTurns((prevList) => {
+      return [
+        ...prevList,
+        {
+          monsterText: `Monster hits player ${dmg1}`,
+          playerText: `Player hits monster ${dmg2}`,
+        },
+      ];
+    });
   };
 
   const heal = () => {
@@ -75,97 +98,33 @@ function App() {
         gameData.playerHealth <= 90
           ? (gameData.playerHealth += 10)
           : (gameData.playerHealth = 100),
-      monsterHealth:
-        gameData.monsterHealth <= 90
-          ? (gameData.monsterHealth += 10)
-          : (gameData.monsterHealth = 100),
     });
   };
 
   const onGiveup = () => {
     setGameData({
+      isGameRunning: false,
       playerHealth: 100,
       monsterHealth: 100,
-      isGameRunning: false,
-      turns: [],
     });
     alert("Game Ended");
   };
 
   return (
     <div className="App">
-      <section className="player__bars">
-        <div className="player__container">
-          <h1 className="text-center">You</h1>
-          <div className="healthbar">
-            <div
-              className="healthbar text-center"
-              style={{
-                width:
-                  gameData.playerHealth <= 0
-                    ? "0%"
-                    : gameData.playerHealth + "%",
-              }}
-            >
-              <span className="health-digit">{gameData.playerHealth}</span>
-            </div>
-          </div>
-        </div>
-        <div className="player__container">
-          <h1 className="text-center">Monster</h1>
-          <div className="healthbar">
-            <div
-              className="healthbar text-center"
-              style={{
-                width:
-                  gameData.monsterHealth <= 0
-                    ? "0%"
-                    : gameData.monsterHealth + "%",
-              }}
-            >
-              <span className="health-digit">{gameData.monsterHealth}</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {gameData.isGameRunning ? <HealthBar gameData={gameData} /> : <></>}
       {gameData.isGameRunning ? (
         <React.Fragment>
-          <section className="controls">
-            <div>
-              <button id="attack" onClick={attack}>
-                Attack
-              </button>
-              <button id="special-attack" onClick={onSpecialAttack}>
-                Special Attack
-              </button>
-              <button id="heal" onClick={heal}>
-                Heal
-              </button>
-              <button id="give-up" onClick={onGiveup}>
-                Give up
-              </button>
-            </div>
-          </section>
-          {gameData.turns.length > 0 ? (
-            <section className="log">
-              <div>
-                <ul>
-                  <li>Hits</li>
-                </ul>
-              </div>
-            </section>
-          ) : (
-            <div></div>
-          )}
+          <Controls
+            attack={attack}
+            onSpecialAttack={onSpecialAttack}
+            heal={heal}
+            onGiveup={onGiveup}
+          />
+          {turns.length > 0 ? <Logs turns={turns} /> : <div></div>}
         </React.Fragment>
       ) : (
-        <section className="controls">
-          <div>
-            <button id="start-game" onClick={onNewGame}>
-              New Game
-            </button>
-          </div>
-        </section>
+        <StartScreen onNewGame={onNewGame} />
       )}
     </div>
   );

@@ -1,0 +1,52 @@
+.controls {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin: 1rem 4rem;
+  border-radius: 0.7rem;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 1px hsl(0, 0%, 0%);
+  margin: 1rem;
+  border-radius: 2rem;
+  border: 0;
+  cursor: pointer;
+  color: hsl(0, 0%, 100%);
+}
+
+.attack {
+  background-color: hsl(5, 100%, 70%);
+}
+
+.attack:hover {
+  background-color: hsl(359, 100%, 62%);
+}
+
+.special-attack {
+  background-color: hsl(33, 100%, 65%);
+}
+
+.special-attack:hover {
+  background-color: hsl(31, 100%, 58%);
+}
+
+.heal {
+  background-color: hsl(120, 66%, 50%);
+}
+
+.heal:hover {
+  background-color: hsl(120, 43%, 46%);
+}
+
+.give-up {
+  background-color: hsl(0, 0%, 63%);
+}
+
+.give-up:hover {
+  background-color: hsl(0, 0%, 28%);
+}

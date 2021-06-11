@@ -1,0 +1,41 @@
+.player__bars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.player__container {
+  width: 50%;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 2rem;
+  color: hsl(0, 0%, 100%);
+}
+
+.healthbar {
+  width: 80%;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: hsl(0, 0%, 93%);
+  margin: auto;
+  transition: width 500ms;
+}
+
+.healthbar div {
+  background-color: hsl(120, 66%, 50%);
+  margin: 0;
+  color: #ffffff;
+}
+
+.health-digit {
+  line-height: 2rem;
+  font-weight: 700;
+}
