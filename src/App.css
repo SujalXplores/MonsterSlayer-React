@@ -1,38 +1,127 @@
-.App {
+.player__bars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+}
+
+.text-center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.player__container {
+  width: 50%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  font-weight: 400;
+  font-size: 2rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.healthbar {
+  width: 80%;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: hsl(0, 0%, 93%);
+  margin: auto;
+  transition: width 500ms;
 }
 
-.App-link {
-  color: #61dafb;
+.healthbar div {
+  background-color: hsl(120, 66%, 50%);
+  margin: 0;
+  color: #ffffff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.health-digit {
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+.controls,
+.log {
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 0px 3px 6px #ccc;
+}
+
+.turn {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.log ul {
+  list-style: none;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.log ul li {
+  margin: 5px;
+}
+
+.log ul .player-turn {
+  color: hsl(240, 100%, 50%);
+  background-color: hsl(231, 100%, 95%);
+}
+
+.log ul .monster-turn {
+  color: hsl(0, 100%, 50%);
+  background-color: hsl(359, 100%, 88%);
+}
+
+button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 1px hsl(0, 0%, 0%);
+  margin: 1rem;
+  border-radius: 2rem;
+  border: 0;
+  cursor: pointer;
+  color: hsl(0, 0%, 100%);
+}
+
+#start-game {
+  background-color: hsl(231, 65%, 50%);
+}
+
+#start-game:hover {
+  background-color: hsl(231, 48%, 48%);
+}
+
+#attack {
+  background-color: hsl(5, 100%, 70%);
+}
+
+#attack:hover {
+  background-color: hsl(359, 100%, 62%);
+}
+
+#special-attack {
+  background-color: hsl(33, 100%, 65%);
+}
+
+#special-attack:hover {
+  background-color: hsl(31, 100%, 58%);
+}
+
+#heal {
+  background-color: hsl(120, 66%, 50%);
+}
+
+#heal:hover {
+  background-color: hsl(120, 43%, 46%);
+}
+
+#give-up {
+  background-color: hsl(0, 0%, 63%);
+}
+
+#give-up:hover {
+  background-color: hsl(0, 0%, 28%);
 }
