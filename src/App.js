@@ -18,17 +18,31 @@ function App() {
     });
   };
 
-  function damage(min, max) {
+  function randomCalc(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   const attack = () => {
-    let dmg1 = damage(1, 10);
-    let dmg2 = damage(1, 10);
+    let dmg1 = randomCalc(1, 10);
+    let dmg2 = randomCalc(1, 10);
     setGameData({
       ...gameData,
       playerHealth: gameData.playerHealth - dmg1,
       monsterHealth: gameData.monsterHealth - dmg2,
+    });
+  };
+
+  const heal = () => {
+    setGameData({
+      ...gameData,
+      playerHealth:
+        gameData.playerHealth <= 90
+          ? (gameData.playerHealth += 10)
+          : (gameData.playerHealth = 100),
+      monsterHealth:
+        gameData.monsterHealth <= 90
+          ? (gameData.monsterHealth += 10)
+          : (gameData.monsterHealth = 100),
     });
   };
 
@@ -76,7 +90,9 @@ function App() {
                 Attack
               </button>
               <button id="special-attack">Special Attack</button>
-              <button id="heal">Heal</button>
+              <button id="heal" onClick={heal}>
+                Heal
+              </button>
               <button id="give-up" onClick={onGiveup}>
                 Give up
               </button>
