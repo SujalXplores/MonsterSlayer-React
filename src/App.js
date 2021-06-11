@@ -9,27 +9,40 @@ function App() {
     turns: [],
   });
 
-  const onNewGame = () => {
+  function onNewGame() {
     setGameData({
       playerHealth: 100,
       monsterHealth: 100,
       isGameRunning: true,
       turns: [],
     });
-  };
+  }
+
+  function onGameEnd() {
+    setGameData({
+      playerHealth: 100,
+      monsterHealth: 100,
+      isGameRunning: false,
+      turns: [],
+    });
+  }
 
   function randomCalc(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   const attack = () => {
-    let dmg1 = randomCalc(1, 10);
+    if (checkWin()) {
+      return;
+    }
+    let dmg1 = randomCalc(5, 15);
     let dmg2 = randomCalc(1, 10);
     setGameData({
       ...gameData,
       playerHealth: gameData.playerHealth - dmg1,
       monsterHealth: gameData.monsterHealth - dmg2,
     });
+    checkWin();
   };
 
   const heal = () => {
@@ -56,6 +69,25 @@ function App() {
     alert("Game Ended");
   };
 
+  function checkWin() {
+    if (gameData.monsterHealth <= 0) {
+      if (window.confirm("You Won! New Game?")) {
+        onNewGame();
+      } else {
+        onGameEnd();
+      }
+      return true;
+    } else if (gameData.playerHealth <= 0) {
+      if (window.confirm("You Lost! New Game?")) {
+        onNewGame();
+      } else {
+        onGameEnd();
+      }
+      return true;
+    }
+    return false;
+  }
+
   return (
     <div className="App">
       <section className="player__bars">
@@ -64,7 +96,12 @@ function App() {
           <div className="healthbar">
             <div
               className="healthbar text-center"
-              style={{ width: gameData.playerHealth + "%" }}
+              style={{
+                width:
+                  gameData.playerHealth <= 0
+                    ? "0%"
+                    : gameData.playerHealth + "%",
+              }}
             >
               <span className="health-digit">{gameData.playerHealth}</span>
             </div>
@@ -75,7 +112,12 @@ function App() {
           <div className="healthbar">
             <div
               className="healthbar text-center"
-              style={{ width: gameData.monsterHealth + "%" }}
+              style={{
+                width:
+                  gameData.monsterHealth <= 0
+                    ? "0%"
+                    : gameData.monsterHealth + "%",
+              }}
             >
               <span className="health-digit">{gameData.monsterHealth}</span>
             </div>
