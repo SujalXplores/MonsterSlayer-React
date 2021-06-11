@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,23 @@ function App() {
     isGameRunning: false,
     turns: [],
   });
+
+  useEffect(() => {
+    if (gameData.monsterHealth <= 0) {
+      if (window.confirm("You Won! New Game?")) {
+        onNewGame();
+      } else {
+        onGameEnd();
+      }
+      return true;
+    } else if (gameData.playerHealth <= 0) {
+      if (window.confirm("You Lost! New Game?")) {
+        onNewGame();
+      } else {
+        onGameEnd();
+      }
+    }
+  }, [gameData.playerHealth, gameData.monsterHealth]);
 
   function onNewGame() {
     setGameData({
@@ -32,17 +49,23 @@ function App() {
   }
 
   const attack = () => {
-    if (checkWin()) {
-      return;
-    }
-    let dmg1 = randomCalc(5, 15);
+    let dmg1 = randomCalc(1, 10);
     let dmg2 = randomCalc(1, 10);
     setGameData({
       ...gameData,
       playerHealth: gameData.playerHealth - dmg1,
       monsterHealth: gameData.monsterHealth - dmg2,
     });
-    checkWin();
+  };
+
+  const onSpecialAttack = () => {
+    let dmg1 = randomCalc(10, 20);
+    let dmg2 = randomCalc(10, 20);
+    setGameData({
+      ...gameData,
+      playerHealth: gameData.playerHealth - dmg1,
+      monsterHealth: gameData.monsterHealth - dmg2,
+    });
   };
 
   const heal = () => {
@@ -68,25 +91,6 @@ function App() {
     });
     alert("Game Ended");
   };
-
-  function checkWin() {
-    if (gameData.monsterHealth <= 0) {
-      if (window.confirm("You Won! New Game?")) {
-        onNewGame();
-      } else {
-        onGameEnd();
-      }
-      return true;
-    } else if (gameData.playerHealth <= 0) {
-      if (window.confirm("You Lost! New Game?")) {
-        onNewGame();
-      } else {
-        onGameEnd();
-      }
-      return true;
-    }
-    return false;
-  }
 
   return (
     <div className="App">
@@ -131,7 +135,9 @@ function App() {
               <button id="attack" onClick={attack}>
                 Attack
               </button>
-              <button id="special-attack">Special Attack</button>
+              <button id="special-attack" onClick={onSpecialAttack}>
+                Special Attack
+              </button>
               <button id="heal" onClick={heal}>
                 Heal
               </button>
