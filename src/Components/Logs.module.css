@@ -4,7 +4,9 @@
   border: 1px solid #ccc;
   margin: 1rem 4rem;
   border-radius: 0.7rem;
+  overflow-y: scroll;
   background: rgba(0, 0, 0, 0.8);
+  height: 20rem;
 }
 
 .turn {
